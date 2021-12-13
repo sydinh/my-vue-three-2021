@@ -1,44 +1,35 @@
 <template>
-    <ul v-for="job in jobs" :key="job.id">
-        <li>
-            <span>Title:</span>
-            <router-link :to="{ name: 'JobDetails', params: { id: job.id } }">
-                {{ job.title }}
-            </router-link>
-        </li>
-        <li><span>Description:</span> {{ job.description }}</li>
-        <li><span>Company:</span> {{ job.company }}</li>
-    </ul>
+    <div v-if="jobs.length > 0">
+        <ul v-for="job in jobs" :key="job.id">
+            <li>
+                <span>Title:</span>
+                <router-link
+                    :to="{ name: 'JobDetails', params: { id: job.id } }"
+                >
+                    {{ job.title }}
+                </router-link>
+            </li>
+            <li><span>Description:</span> {{ job.description }}</li>
+            <li><span>Company:</span> {{ job.company }}</li>
+        </ul>
+    </div>
+    <div v-else>
+        <p>No jobs found</p>
+    </div>
 </template>
 
 <script>
 export default {
     data() {
         return {
-            jobs: [
-                {
-                    id: 1,
-                    title: 'Frontend Developer',
-                    description:
-                        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius similique qui atque ad obcaecati temporibus.',
-                    company: 'Google',
-                },
-                {
-                    id: 2,
-                    title: 'Backend Developer',
-                    description:
-                        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius similique qui atque ad obcaecati temporibus.',
-                    company: 'Facebook',
-                },
-                {
-                    id: 3,
-                    title: 'Full-stack Developer',
-                    description:
-                        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius similique qui atque ad obcaecati temporibus.',
-                    company: 'Twitter',
-                },
-            ],
+            jobs: [],
         };
+    },
+    mounted() {
+        fetch('http://localhost:3000/jobs')
+            .then((response) => response.json())
+            .then((json) => (this.jobs = json))
+            .catch((error) => console.error(error.message));
     },
 };
 </script>
