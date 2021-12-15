@@ -1,5 +1,7 @@
 <template>
-    <h1>{{ post.title }}</h1>
+    <router-link :to="{ name: 'PostDetail', params: { id: post.id } }">
+        {{ post.title }}
+    </router-link>
     <p>{{ snippet }}</p>
 </template>
 

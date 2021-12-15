@@ -1,7 +1,7 @@
 import { ref } from 'vue';
 
 const fetchPost = (id) => {
-    const post = ref([]);
+    const post = ref(null);
     const error = ref(null);
     const isLoading = ref(true);
 
